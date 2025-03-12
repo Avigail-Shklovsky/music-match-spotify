@@ -66,20 +66,25 @@ const handler = NextAuth({
     async signIn({ profile }) {
       if (!profile) return false;
 
-      await connectDB();
-      const existingUser = await User.findOne({ spotifyId: profile.id });
+      // await connectDB();
+      // const existingUser = await User.findOne({ spotifyId: profile.id });
 
-      if (!existingUser) {
-        await User.create({
-          spotifyId: profile.id,
-          displayName: profile.display_name,
-          email: profile.email,
-          profileUrl: profile.external_urls.spotify,
-          followers: profile.followers.total,
-          image: profile.images?.[0]?.url || "",
-        });
-      }
+      // if (!existingUser) {
+      //   await User.create({
+      //     spotifyId: profile.id,
+      //     displayName: profile.display_name,
+      //     email: profile.email,
+      //     profileUrl: profile.external_urls.spotify,
+      //     followers: profile.followers.total,
+      //     image: profile.images?.[0]?.url || "",
+      //   });
+      // }
       return true;
+    },
+
+    async redirect({ url, baseUrl }) {
+      console.log("Redirecting to:", url);
+      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
 });
