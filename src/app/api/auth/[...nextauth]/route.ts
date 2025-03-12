@@ -1,5 +1,5 @@
-import { connectDB } from "@/app/lib/mongodb";
-import User from "@/app/models/User";
+// import { connectDB } from "@/app/lib/mongodb";
+// import User from "@/app/models/User";
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 
