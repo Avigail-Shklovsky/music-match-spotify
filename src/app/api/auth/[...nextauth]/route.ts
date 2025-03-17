@@ -1,5 +1,5 @@
-// import { connectDB } from "@/app/lib/mongodb";
-// import User from "@/app/models/User";
+import { connectDB } from "@/app/lib/mongodb";
+import User from "@/app/models/User";
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 
@@ -40,7 +40,8 @@ const handler = NextAuth({
       clientId: process.env.SPOTIFY_CLIENT_ID!,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
       authorization:
-        "https://accounts.spotify.com/authorize?scope=user-read-email,user-top-read",
+      "https://accounts.spotify.com/authorize?scope=user-read-email,user-top-read&prompt=consent",
+    
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
@@ -64,23 +65,32 @@ const handler = NextAuth({
       return session;
     },
     async signIn({ profile }) {
+      console.log("signIn callback triggered");
       if (!profile) return false;
-
-      // await connectDB();
-      // const existingUser = await User.findOne({ spotifyId: profile.id });
-
-      // if (!existingUser) {
-      //   await User.create({
-      //     spotifyId: profile.id,
-      //     displayName: profile.display_name,
-      //     email: profile.email,
-      //     profileUrl: profile.external_urls.spotify,
-      //     followers: profile.followers.total,
-      //     image: profile.images?.[0]?.url || "",
-      //   });
-      // }
+    
+      await connectDB();
+      console.log("Connected to DB");
+    
+      const updatedUserData = {
+        displayName: profile.display_name,
+        email: profile.email,
+        profileUrl: profile.external_urls.spotify,
+        followers: profile.followers.total,
+        image: profile.images?.[0]?.url || "",
+      };
+    
+      const existingUser = await User.findOneAndUpdate(
+        { spotifyId: profile.id },
+        updatedUserData,
+        { new: true, upsert: true } // Create user if not found
+      );
+    
+      console.log("User updated:", existingUser);
+    
       return true;
     },
+    
+    
 
     async redirect({ url, baseUrl }) {
       console.log("Redirecting to:", url);
