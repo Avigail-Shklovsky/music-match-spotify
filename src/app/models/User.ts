@@ -1,14 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IUser extends Document {
-  spotifyId: String;
-  displayName: String;
-  email: String;
-  profileUrl: String;
+  spotifyId: string;
+  displayName: string;
+  email: string;
+  profileUrl: string;
   followers: number;
-  image: String;
-  currentTopArtists:String[];
-  currentTopTracks: String[];
+  image: string;
+  currentTopArtists: string[];
+  currentTopTracks: string[];
 }
 
 const UserSchema = new Schema<IUser>({
@@ -18,9 +18,8 @@ const UserSchema = new Schema<IUser>({
   profileUrl: { type: String, required: true },
   followers: { type: Number, default: 0 },
   image: { type: String },
-  currentTopArtists:[{ type: mongoose.Schema.Types.ObjectId, ref: "Artist" }],
-  currentTopTracks:[{ type: mongoose.Schema.Types.ObjectId, ref: "Track" }],
-
+  currentTopArtists: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artist" }],
+  currentTopTracks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Track" }],
 });
 
 // Avoid model overwrite on hot reload
