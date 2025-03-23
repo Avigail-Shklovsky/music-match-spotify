@@ -7,6 +7,8 @@ export interface IUser extends Document {
   profileUrl: string;
   followers: number;
   image: string;
+  currentTopArtists:String[];
+  currentTopTracks: String[];
 }
 
 const UserSchema = new Schema<IUser>({
@@ -16,6 +18,9 @@ const UserSchema = new Schema<IUser>({
   profileUrl: { type: String, required: true },
   followers: { type: Number, default: 0 },
   image: { type: String },
+  currentTopArtists:[{ type: mongoose.Schema.Types.ObjectId, ref: "Artist" }],
+  currentTopTracks:[{ type: mongoose.Schema.Types.ObjectId, ref: "Track" }],
+
 });
 
 // Avoid model overwrite on hot reload
