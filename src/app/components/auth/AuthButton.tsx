@@ -7,14 +7,19 @@ const AuthButton = () => {
   if (session) {
     return (
       <div>
-        <button onClick={() => signOut()}>Sign Out</button>{" "}
+        <button
+          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+          onClick={() => signOut()}
+        >
+          Sign Out
+        </button>{" "}
         <br />
       </div>
     );
   }
 
   return (
-    <button onClick={() => signIn("spotify")}>Sign In with Spotify</button>
+    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" onClick={() => signIn("spotify")}>Sign In with Spotify</button>
   );
 };
 

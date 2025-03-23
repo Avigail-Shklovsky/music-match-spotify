@@ -2,10 +2,11 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SpotifyProfile } from "next-auth/providers/spotify";
 
 const Profile = () => {
   const { data: session } = useSession();
-  const [profileData, setProfileData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<SpotifyProfile>();
 
   useEffect(() => {
     if (session) {
@@ -15,13 +16,12 @@ const Profile = () => {
         })
         .then((response) => {
           setProfileData(response.data);
-          console.log(response.data);
           console.log("profile data:",profileData);
           
         })
         .catch((error) => console.error("Error fetching data:", error));
     }
-  }, [session]);
+  }, [session,profileData]);
   
 
   if (!session) {

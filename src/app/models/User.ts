@@ -1,12 +1,12 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IUser extends Document {
-  spotifyId: string;
-  displayName: string;
-  email: string;
-  profileUrl: string;
+  spotifyId: String;
+  displayName: String;
+  email: String;
+  profileUrl: String;
   followers: number;
-  image: string;
+  image: String;
   currentTopArtists:String[];
   currentTopTracks: String[];
 }
