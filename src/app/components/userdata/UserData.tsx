@@ -9,9 +9,13 @@ const Profile = () => {
   const [profileData, setProfileData] = useState<SpotifyProfile>();
 
   useEffect(() => {
+    console.log("Session data:", session);
+    
     if (session) {
+      console.log("Fetching data with token:", session.accessToken);
+
       axios
-        .get("/api/userData", {
+        .get(`/api/userData`, {
           headers: { Authorization: `Bearer ${session.accessToken}` },
         })
         .then((response) => {
@@ -19,9 +23,10 @@ const Profile = () => {
           console.log("profile data:",profileData);
           
         })
-        .catch((error) => console.error("Error fetching data:", error));
+        .catch((error) =>      console.error("Error fetching data:", error.response?.data || error.message)
+      );
     }
-  }, [session,profileData]);
+  }, [session]);
   
 
   if (!session) {
@@ -32,19 +37,7 @@ const Profile = () => {
     <div>
       {profileData && (
         <div>
-            {/* <div>{profileData}</div> */}
-          <h2>Your Top Artists</h2>
-          {/* <ul>
-            {profileData.topArtists.map((artist: any) => (
-              <li key={artist.id}>{artist.name}</li>
-            ))}
-          </ul> */}
-          <h2 >Your Top Tracks</h2>
-          {/* <ul>
-            {profileData.topTracks.map((track: any) => (
-              <li key={track.id}>{track.name}</li>
-            ))}
-          </ul> */}
+          <h2>data fetched</h2>         
         </div>
       )}
     </div>
