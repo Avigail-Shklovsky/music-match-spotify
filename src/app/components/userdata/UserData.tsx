@@ -9,7 +9,7 @@ const Profile = () => {
   const [profileData, setProfileData] = useState<SpotifyProfile>();
 
   useEffect(() => {
-    console.log("Session data:", session);
+    // console.log("Session data:", session);
     
     if (session) {
       console.log("Fetching data with token:", session.accessToken);
@@ -20,6 +20,7 @@ const Profile = () => {
         })
         .then((response) => {
           setProfileData(response.data);
+          // console.log(response.data);
           console.log("profile data:",profileData);
           
         })
